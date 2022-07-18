@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import useApi from '../../hooks/useApi';
+import { searchLocation } from '../../api/locations';
 
 interface Props {
   placeholder?: string;
@@ -7,6 +9,12 @@ interface Props {
 }
 
 export default function SearchInput({ placeholder, style }: Props) {
+  const searchLocationsApi = useApi(searchLocation);
+
+  useEffect(() => {
+    searchLocationsApi.request();
+  }, []);
+
   return <Input style={style} type="text" placeholder={placeholder} />;
 }
 
