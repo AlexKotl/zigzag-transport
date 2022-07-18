@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import colors from '../config/colors';
+import { pathIcon, switchIcon } from '../config/icons';
 import sliderImg from '../assets/header-slider-image-1@2x.png';
 import Card from './common/Card';
 import LocationInput from './common/LocationInput';
 import Button from './common/Button';
-
-import pathIcon from './../assets/icons/path.png';
-import switchIcon from './../assets/icons/switch.png';
 
 export default function Search() {
   return (
