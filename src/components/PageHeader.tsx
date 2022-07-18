@@ -21,22 +21,25 @@ export default function PageHeader() {
 
 const Section = styled.section`
   background-color: #f6f6f6;
+  padding-top: 14px;
 `;
 
 const Container = styled.div`
   max-width: 734px;
   margin: auto;
-  padding-bottom: 100px;
+  padding-bottom: 70px;
 `;
 
 const Breadcrumbs = styled.div`
   font-size: 12px;
   line-height: 24px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.h1`
   font-size: 48px;
   font-weight: 700;
+  margin-bottom: 10px;
 `;
 const SubTitle = styled.h2`
   font-size: 18px;

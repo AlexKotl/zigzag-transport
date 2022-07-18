@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import Header from './components/Header';
 import PageHeader from './components/PageHeader';
-import Search from './components/Search';
+import Search from './components/SearchForm';
 
 function App() {
   return (
