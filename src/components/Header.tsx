@@ -12,7 +12,7 @@ export default function Header() {
         <MenuElement />
       </Menu>
       <Logo>
-        <img src={logo} width={48} />
+        <img src={logo} style={{ display: 'block' }} width={48} />
       </Logo>
     </Container>
   );
