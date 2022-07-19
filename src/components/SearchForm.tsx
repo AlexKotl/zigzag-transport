@@ -7,15 +7,19 @@ import Card from './common/Card';
 import LocationInput from './common/LocationInput';
 import Button from './common/Button';
 
-export default function Search() {
+interface Props {
+  onSearch: (from: string, to: string) => void;
+}
+
+export default function Search({ onSearch }: Props) {
   const [locationFrom, setLocationFrom] = useState(null);
   const [locationTo, setLocationTo] = useState(null);
 
   const search = (): void => {
     if (locationFrom && locationTo) {
-      console.log('navigating');
+      onSearch(locationFrom, locationTo);
     } else {
-      alert('Please select arrival and destination.');
+      alert('Please select origin and destination locations.');
     }
   };
 

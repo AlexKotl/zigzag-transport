@@ -1,15 +1,28 @@
-import React from 'react';
+import { useState } from 'react';
 import './App.scss';
 import Header from './components/Header';
 import PageHeader from './components/PageHeader';
-import Search from './components/SearchForm';
+import SearchForm from './components/SearchForm';
+import SearchResults from './components/SearchResults';
 
 function App() {
+  const [locationFrom, setLocationFrom] = useState(null);
+  const [locationTo, setLocationTo] = useState(null);
+
+  const search = (from: string, to: string) => {
+    setLocationFrom(from);
+    setLocationTo(to);
+  };
+
   return (
     <div className="App">
       <Header></Header>
       <PageHeader></PageHeader>
-      <Search></Search>
+      <SearchForm onSearch={search}></SearchForm>
+      <SearchResults
+        locationFrom={locationFrom}
+        locationTo={locationTo}
+      ></SearchResults>
     </div>
   );
 }
