@@ -13,13 +13,15 @@ export default function CardEmission({ title, emission, icon, theme }: Props) {
   return (
     <Container theme={theme}>
       <Title>
-        <img src={icon} alt="" />
+        <img src={icon} alt="" style={{ marginRight: 7 }} />
         {title}
       </Title>
       <Emission>{emission}</Emission>
-      <Tip theme={theme}>
-        CO<sub>2</sub> / Jahr
-      </Tip>
+      {emission && (
+        <Tip theme={theme}>
+          CO<sub>2</sub> / Jahr
+        </Tip>
+      )}
     </Container>
   );
 }
@@ -27,15 +29,17 @@ export default function CardEmission({ title, emission, icon, theme }: Props) {
 const Container = styled(Card)`
   flex: 1 1 0;
   margin: 0 7px;
+  padding: 15px;
 `;
 
 const Title = styled.div`
-  disaply: flex;
+  display: flex;
 `;
 
 const Emission = styled.div`
   font-size: 20px;
   font-weight: bold;
+  margin-top: 10px;
 `;
 
 const Tip = styled.div`

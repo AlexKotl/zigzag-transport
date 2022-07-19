@@ -9,6 +9,7 @@ function App() {
   const [locationFrom, setLocationFrom] = useState(null);
   const [locationTo, setLocationTo] = useState(null);
 
+  // changing reactive props will trigger search function inside SearchResults component
   const search = (from: string, to: string) => {
     setLocationFrom(from);
     setLocationTo(to);

@@ -12,13 +12,65 @@ interface Props {
   locationTo: string;
 }
 
+// helper function to convert to km: 1250 => 1.25 km
+const metersToString = (distance: number) =>
+  (Math.round(distance / 10) / 100).toString() + ' km';
+
 export default function SearchResults({ locationFrom, locationTo }: Props) {
   const searchTripApi = useApi(searchTrip);
+  const [emission, setEmission] = useState('');
+  const [emissionCar, setEmissionCar] = useState('');
+  const [distance, setDistance] = useState('');
+  const [distanceCar, setDistanceCar] = useState('');
 
   // when location changed - update search results
   useEffect(() => {
+    // use async function in effect trick
+    const fetchData = async () => {
+      const data = await searchTripApi.request(locationFrom, locationTo);
+
+      // handle errors from api - if exists - display to user
+      if (data.systemMessages?.length > 0) {
+        const message = data.systemMessages
+          .filter((message: any) => message.type === 'error' && message.text)
+          .reduce((cur: any, next: any) => cur.text + '\n' + next.text, '');
+        if (message) {
+          alert(message);
+          return;
+        }
+      }
+
+      // calculate required data from api response
+      let sumEmission = 0,
+        sumEmissionCar = 0,
+        sumDistance = 0,
+        sumDistanceCar = 0;
+
+      data.journeys?.forEach((journey: any) => {
+        journey.legs?.forEach((leg: any) => {
+          // find prop name, as it may be variable like CO2Emission_Actual_Stadtbahn
+          const propName = Object.keys(leg.properties).find(
+            (p: string) => p.indexOf('CO2Emission_Actual') !== -1
+          );
+          if (propName) {
+            if (leg.transportation?.product?.name === 'Auto') {
+              sumEmissionCar += parseFloat(leg.properties[propName]);
+              sumDistanceCar += leg.distance;
+            } else {
+              sumEmission += parseFloat(leg.properties[propName]);
+              sumDistance += leg.distance;
+            }
+          }
+        });
+      });
+
+      setEmission(sumEmission.toString() + ' kg');
+      setEmissionCar(sumEmissionCar.toString() + ' kg');
+      setDistance(metersToString(sumDistance));
+      setDistanceCar(metersToString(sumDistanceCar));
+    };
     if (locationFrom && locationTo) {
-      searchTripApi.request(locationFrom, locationTo);
+      fetchData();
     }
   }, [locationFrom, locationTo]);
 
@@ -27,7 +79,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
       <HeaderCard>
         <HeaderCardItem>
           <img src={carIcon} alt="" />
-          <div>0 km</div>
+          <div>{distanceCar}</div>
         </HeaderCardItem>
         <HeaderDelimiter />
         <HeaderCardItem
@@ -37,7 +89,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
           }}
         >
           <img src={busIcon} alt="" />
-          <div>0 km</div>
+          <div>{distance}</div>
         </HeaderCardItem>
       </HeaderCard>
 
@@ -45,8 +97,17 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
         <div style={{ flex: '1 1 0' }}>
           <Title>Auswirkungen auf die Umwelt</Title>
           <ResultCards>
-            <CardEmission />
-            <CardEmission theme="primary" />
+            <CardEmission
+              icon={carSmallIcon}
+              title="Auto"
+              emission={emission}
+            />
+            <CardEmission
+              icon={logoIcon}
+              title="VVS Abo"
+              emission={emissionCar}
+              theme="primary"
+            />
           </ResultCards>
           <Link href="#">Wie entstehen diese Werte?</Link>
         </div>
