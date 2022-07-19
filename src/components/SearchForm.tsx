@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import colors from '../config/colors';
 import { pathIcon, switchIcon } from '../config/icons';
@@ -7,9 +8,20 @@ import LocationInput from './common/LocationInput';
 import Button from './common/Button';
 
 export default function Search() {
+  const [locationFrom, setLocationFrom] = useState(null);
+  const [locationTo, setLocationTo] = useState(null);
+
+  const search = (): void => {
+    if (locationFrom && locationTo) {
+      console.log('navigating');
+    } else {
+      alert('Please select arrival and destination.');
+    }
+  };
+
   return (
     <Container>
-      <div style={{ flex: '1 1 0', marginRight: '5vw' }}>
+      <div style={{ flex: '1 1 0', marginRight: '7vw' }}>
         <img src={sliderImg} alt="" width="100%" />
       </div>
       <Card style={{ flex: '1 1 0' }}>
@@ -20,15 +32,19 @@ export default function Search() {
           </SearchSubtitle>
 
           <SearchContainer>
-            <div style={{ paddingRight: 10 }}>
-              <img src={pathIcon} alt="" height="74" />
+            <div style={{ paddingRight: 10, paddingTop: 6 }}>
+              <img src={pathIcon} alt="" height="70" />
             </div>
-            <div>
+            <div style={{ width: '100%' }}>
               <LocationInput
                 placeholder="von : Ort, Haltestelle, Adresse, POI"
-                style={{ marginBottom: 16 }}
+                style={{ marginBottom: 20 }}
+                onSelect={(id: string) => setLocationFrom(id)}
               />
-              <LocationInput placeholder="nach : Ort, Haltestelle, Adresse, POI" />
+              <LocationInput
+                placeholder="nach : Ort, Haltestelle, Adresse, POI"
+                onSelect={(id: string) => setLocationTo(id)}
+              />
             </div>
             <div style={{ paddingLeft: 10 }}>
               <img
@@ -41,7 +57,7 @@ export default function Search() {
           </SearchContainer>
         </div>
 
-        <Button>Weiter</Button>
+        <Button onClick={search}>Weiter</Button>
       </Card>
     </Container>
   );

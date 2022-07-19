@@ -5,10 +5,15 @@ import colors from '../../config/colors';
 interface Props {
   children?: React.ReactNode;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
-export default function Button({ children, style }: Props) {
-  return <InputButton style={style}>{children}</InputButton>;
+export default function Button({ children, style, onClick }: Props) {
+  return (
+    <InputButton style={style} onClick={onClick}>
+      {children}
+    </InputButton>
+  );
 }
 
 const InputButton = styled.button`
