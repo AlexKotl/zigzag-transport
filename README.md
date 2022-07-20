@@ -1,4 +1,4 @@
-# dotscene
+# zigzag Trip Planner
 
 Small app that allows to plan a trip and shows CO2 emission of journey.
 
@@ -7,6 +7,13 @@ Small app that allows to plan a trip and shows CO2 emission of journey.
 ## Live Demo
 
 http://zigzag-demo.s3-website.af-south-1.amazonaws.com/
+
+## Run locally
+
+```
+npm i
+npm start
+```
 
 ## API
 
