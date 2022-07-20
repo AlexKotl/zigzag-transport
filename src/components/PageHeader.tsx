@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../config/colors';
 
-export default function PageHeader() {
+interface Props {
+  onBack: () => void;
+}
+
+export default function PageHeader({ onBack }: Props) {
   return (
     <Section>
       <Container>
@@ -14,6 +18,7 @@ export default function PageHeader() {
         <SubTitle>
           Umwelt und Preisvergleich zwischen VVS und Deinem Auto
         </SubTitle>
+        <BackButton onClick={onBack}>‹ Back</BackButton>
       </Container>
     </Section>
   );
@@ -44,4 +49,11 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   font-size: 18px;
   font-weight: 400;
+`;
+
+const BackButton = styled.a`
+  color: #666;
+  text-decoration: underline;
+  margin-top: 10px;
+  display: block;
 `;

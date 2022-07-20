@@ -9,23 +9,27 @@ import SearchResults from './components/SearchResults';
 export default function App() {
   const [locationFrom, setLocationFrom] = useState(null);
   const [locationTo, setLocationTo] = useState(null);
-  const [showResults, setShowResults] = useState(true);
+  const [showResults, setShowResults] = useState(false);
 
   // changing reactive props will trigger search function inside SearchResults component
   const search = (from: string, to: string) => {
     setLocationFrom(from);
     setLocationTo(to);
+    setShowResults(true);
   };
 
   return (
     <div className="App">
       <Header></Header>
-      <PageHeader></PageHeader>
-      <SearchForm onSearch={search}></SearchForm>
-      <SearchResults
-        locationFrom={locationFrom}
-        locationTo={locationTo}
-      ></SearchResults>
+      <PageHeader onBack={() => setShowResults(false)}></PageHeader>
+      {showResults ? (
+        <SearchResults
+          locationFrom={locationFrom}
+          locationTo={locationTo}
+        ></SearchResults>
+      ) : (
+        <SearchForm onSearch={search}></SearchForm>
+      )}
     </div>
   );
 }
