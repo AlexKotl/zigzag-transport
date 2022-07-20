@@ -9,9 +9,10 @@ import Button from './common/Button';
 
 interface Props {
   onSearch: (from: string, to: string) => void;
+  style?: React.CSSProperties;
 }
 
-export default function Search({ onSearch }: Props) {
+export default function Search({ onSearch, style }: Props) {
   const [locationFrom, setLocationFrom] = useState(null);
   const [locationTo, setLocationTo] = useState(null);
 
@@ -24,7 +25,7 @@ export default function Search({ onSearch }: Props) {
   };
 
   return (
-    <Container>
+    <Container style={style}>
       <div style={{ flex: '1 1 0', marginRight: '7vw' }}>
         <img src={sliderImg} alt="" width="100%" />
       </div>
@@ -73,6 +74,7 @@ const Container = styled.section`
   margin-top: -30px;
   display: flex;
   align-items: flex-start;
+  flex: 1 1 0;
 `;
 
 const SearchTitle = styled.div`

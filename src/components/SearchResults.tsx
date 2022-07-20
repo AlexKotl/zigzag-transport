@@ -12,9 +12,11 @@ interface Props {
   locationTo: string;
 }
 
-// helper function to convert to km: 1250 => 1.25 km
+// helper function to format string values for distance and emission
 const metersToString = (distance: number) =>
   (Math.round(distance / 10) / 100).toString() + ' km';
+const emissionToString = (emission: number) =>
+  (Math.round(emission * 100) / 100).toString() + ' kg';
 
 export default function SearchResults({ locationFrom, locationTo }: Props) {
   const searchTripApi = useApi(searchTrip);
@@ -64,8 +66,8 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
         });
       });
 
-      setEmission(sumEmission.toString() + ' kg');
-      setEmissionCar(sumEmissionCar.toString() + ' kg');
+      setEmission(emissionToString(sumEmission));
+      setEmissionCar(emissionToString(sumEmissionCar));
       setDistance(metersToString(sumDistance));
       setDistanceCar(metersToString(sumDistanceCar));
     };
@@ -75,7 +77,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
   }, [locationFrom, locationTo]);
 
   return (
-    <div>
+    <div style={{ flex: '1 1 0' }}>
       <HeaderCard>
         <HeaderCardItem>
           <img src={carIcon} alt="" />
