@@ -5,9 +5,9 @@ import colors from '../config/colors';
 import breakpoints from '../config/breakpoints';
 import { pathIcon, switchIcon } from '../config/icons';
 import sliderImg from '../assets/header-slider-image-1@2x.png';
-import Card from './common/Card';
-import LocationInput from './common/LocationInput';
-import Button from './common/Button';
+import Card from './elements/Card';
+import LocationInput from './elements/LocationInput';
+import Button from './elements/Button';
 
 interface Props {
   onSearch: (from: string, to: string) => void;

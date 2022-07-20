@@ -1,3 +1,5 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import styled from 'styled-components';
 import colors from '../../config/colors';
 import Card from './Card';
@@ -16,7 +18,7 @@ export default function CardEmission({ title, emission, icon, theme }: Props) {
         <img src={icon} alt="" style={{ marginRight: 7 }} />
         {title}
       </Title>
-      <Emission>{emission}</Emission>
+      <Emission>{emission || <Skeleton count={2} />}</Emission>
       {emission && (
         <Tip theme={theme}>
           CO<sub>2</sub> / Jahr

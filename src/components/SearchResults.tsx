@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { flipInX } from 'react-animations';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { carIcon, carSmallIcon, busIcon, logoIcon } from '../config/icons';
 import colors from '../config/colors';
 import breakpoints from '../config/breakpoints';
 import useApi from '../hooks/useApi';
 import { searchTrip } from '../api/locations';
-import Card from './common/Card';
-import CardEmission from './common/CardEmission';
+import Card from './elements/Card';
+import CardEmission from './elements/CardEmission';
 
 interface Props {
   locationFrom: string;
@@ -37,7 +39,9 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
       if (data.systemMessages?.length > 0) {
         const message = data.systemMessages
           .filter((message: any) => message.type === 'error' && message.text)
-          .reduce((cur: any, next: any) => cur.text + '\n' + next.text, '');
+          .reduce((cur: any, next: any) => cur.text + '\n' + next.text, {
+            text: ''
+          });
         if (message) {
           alert(message);
           return;
@@ -53,16 +57,19 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
       data.journeys?.forEach((journey: any) => {
         journey.legs?.forEach((leg: any) => {
           // find prop name, as it may be variable like CO2Emission_Actual_Stadtbahn
+          if (!leg.properties) return;
+
           const propName = Object.keys(leg.properties).find(
             (p: string) => p.indexOf('CO2Emission_Actual') !== -1
           );
           if (propName) {
+            // TODO refactor this
             if (leg.transportation?.product?.name === 'Auto') {
               sumEmissionCar += parseFloat(leg.properties[propName]);
-              sumDistanceCar += leg.distance;
+              sumDistanceCar += leg.distance || 0;
             } else {
               sumEmission += parseFloat(leg.properties[propName]);
-              sumDistance += leg.distance;
+              sumDistance += leg.distance || 0;
             }
           }
         });
@@ -83,7 +90,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
       <HeaderCard>
         <HeaderCardItem>
           <img src={carIcon} alt="" />
-          <div>{distanceCar}</div>
+          <div>{distanceCar || <Skeleton />}</div>
         </HeaderCardItem>
         <HeaderDelimiter />
         <HeaderCardItem
@@ -93,7 +100,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
           }}
         >
           <img src={busIcon} alt="" />
-          <div>{distance}</div>
+          <div>{distance || <Skeleton />}</div>
         </HeaderCardItem>
       </HeaderCard>
 

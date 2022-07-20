@@ -3,17 +3,12 @@ import styled from 'styled-components';
 import { stopIcon, loadingIcon } from '../../config/icons';
 import useApi from '../../hooks/useApi';
 import { searchLocation } from '../../api/locations';
+import type { ILocation } from '../../types/location';
 
 interface Props {
   placeholder?: string;
   style?: React.CSSProperties;
   onSelect: (id: string) => void;
-}
-
-interface ILocation {
-  id: string;
-  disassembledName: string;
-  matchQuality: number;
 }
 
 export default function SearchInput({ placeholder, style, onSelect }: Props) {
@@ -68,7 +63,10 @@ export default function SearchInput({ placeholder, style, onSelect }: Props) {
                 style={{ marginRight: 12 }}
                 alt=""
               />
-              {location.disassembledName}
+              <div>
+                {location.disassembledName}
+                <Subtitle>{location.name}</Subtitle>
+              </div>
             </SuggestionsItem>
           ))}
         </Suggestions>
@@ -119,6 +117,12 @@ const SuggestionsItem = styled.div`
   &:hover {
     background-color: #efefef;
   }
+`;
+
+const Subtitle = styled.small`
+  color: #666;
+  font-size: 12px;
+  display: block;
 `;
 
 const Loading = styled.img`

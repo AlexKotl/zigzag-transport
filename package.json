@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.25",
-    "react-animations": "^1.0.0"
+    "react-animations": "^1.0.0",
+    "react-loading-skeleton": "^3.1.0"
   }
 }
