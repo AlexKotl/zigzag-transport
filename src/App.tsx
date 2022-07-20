@@ -21,7 +21,9 @@ export default function App() {
   return (
     <div className="App">
       <Header></Header>
-      <PageHeader onBack={() => setShowResults(false)}></PageHeader>
+      <PageHeader
+        onBack={showResults && (() => setShowResults(false))}
+      ></PageHeader>
       {showResults ? (
         <SearchResults
           locationFrom={locationFrom}

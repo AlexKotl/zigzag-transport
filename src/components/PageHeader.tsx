@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import colors from '../config/colors';
 
 interface Props {
-  onBack: () => void;
+  onBack: (() => void) | null;
 }
 
 export default function PageHeader({ onBack }: Props) {
@@ -18,7 +18,7 @@ export default function PageHeader({ onBack }: Props) {
         <SubTitle>
           Umwelt und Preisvergleich zwischen VVS und Deinem Auto
         </SubTitle>
-        <BackButton onClick={onBack}>‹ Back</BackButton>
+        {onBack && <BackButton onClick={onBack}>‹ Back</BackButton>}
       </Container>
     </Section>
   );
