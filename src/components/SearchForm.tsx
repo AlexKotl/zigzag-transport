@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { CSSProperties, useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
+import { flipInX } from 'react-animations';
 import colors from '../config/colors';
 import { pathIcon, switchIcon } from '../config/icons';
 import sliderImg from '../assets/header-slider-image-1@2x.png';
@@ -17,7 +18,7 @@ export default function Search({ onSearch, style }: Props) {
   const [locationTo, setLocationTo] = useState(null);
 
   const search = (): void => {
-    if (locationFrom && locationTo) {
+    if (true || (locationFrom && locationTo)) {
       onSearch(locationFrom, locationTo);
     } else {
       alert('Please select origin and destination locations.');
@@ -25,50 +26,61 @@ export default function Search({ onSearch, style }: Props) {
   };
 
   return (
-    <Container style={style}>
-      <div style={{ flex: '1 1 0', marginRight: '7vw' }}>
-        <img src={sliderImg} alt="" width="100%" />
-      </div>
-      <Card style={{ flex: '1 1 0' }}>
-        <div style={{ padding: '0 10px' }}>
-          <SearchTitle>Wähle Deine Pendelroute </SearchTitle>
-          <SearchSubtitle>
-            um zu sehen, wie viel CO2 Du mit VVS sparen kannst
-          </SearchSubtitle>
-
-          <SearchContainer>
-            <div style={{ paddingRight: 10, paddingTop: 6 }}>
-              <img src={pathIcon} alt="" height="70" />
-            </div>
-            <div style={{ width: '100%' }}>
-              <LocationInput
-                placeholder="von : Ort, Haltestelle, Adresse, POI"
-                style={{ marginBottom: 20 }}
-                onSelect={(id: string) => setLocationFrom(id)}
-              />
-              <LocationInput
-                placeholder="nach : Ort, Haltestelle, Adresse, POI"
-                onSelect={(id: string) => setLocationTo(id)}
-              />
-            </div>
-            <div style={{ paddingLeft: 10 }}>
-              <img
-                src={switchIcon}
-                alt=""
-                width="28"
-                style={{ cursor: 'not-allowed' }}
-              />
-            </div>
-          </SearchContainer>
+    <Section>
+      <Container style={style}>
+        <div style={{ flex: '1 1 0', marginRight: '7vw' }}>
+          <img src={sliderImg} alt="" width="100%" />
         </div>
+        <Card style={{ flex: '1 1 0' }}>
+          <div style={{ padding: '0 10px' }}>
+            <SearchTitle>Wähle Deine Pendelroute </SearchTitle>
+            <SearchSubtitle>
+              um zu sehen, wie viel CO2 Du mit VVS sparen kannst
+            </SearchSubtitle>
 
-        <Button onClick={search}>Weiter</Button>
-      </Card>
-    </Container>
+            <SearchContainer style={{}}>
+              <div style={{ paddingRight: 10, paddingTop: 6 }}>
+                <img src={pathIcon} alt="" height="70" />
+              </div>
+              <div style={{ width: '100%' }}>
+                <LocationInput
+                  placeholder="von : Ort, Haltestelle, Adresse, POI"
+                  style={{ marginBottom: 20 }}
+                  onSelect={(id: string) => setLocationFrom(id)}
+                />
+                <LocationInput
+                  placeholder="nach : Ort, Haltestelle, Adresse, POI"
+                  onSelect={(id: string) => setLocationTo(id)}
+                />
+              </div>
+              <div style={{ paddingLeft: 10 }}>
+                <img
+                  src={switchIcon}
+                  alt=""
+                  width="28"
+                  style={{ cursor: 'not-allowed' }}
+                />
+              </div>
+            </SearchContainer>
+          </div>
+
+          <Button onClick={search}>Weiter</Button>
+        </Card>
+      </Container>
+    </Section>
   );
 }
 
-const Container = styled.section`
+const flipInAnimation = keyframes`
+  ${flipInX}
+`;
+
+const Section = styled.section`
+  position: absolute;
+  width: 100%;
+  animation: 1s ${flipInAnimation};
+`;
+const Container = styled.div`
   max-width: 734px;
   margin: auto;
   margin-top: -30px;

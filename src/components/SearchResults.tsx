@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { flipInX } from 'react-animations';
 import { carIcon, carSmallIcon, busIcon, logoIcon } from '../config/icons';
 import useApi from '../hooks/useApi';
 import { searchTrip } from '../api/locations';
@@ -126,6 +127,10 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
   );
 }
 
+const flipInAnimation = keyframes`
+  ${flipInX}
+`;
+
 const HeaderCard = styled(Card)`
   display: flex;
   padding: 0;
@@ -155,6 +160,7 @@ const Container = styled.div`
   margin: auto;
   margin-top: 35px;
   display: flex;
+  animation: 1s ${flipInAnimation};
 `;
 
 const ResultCards = styled.div`
