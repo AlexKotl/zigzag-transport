@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { flipInX } from 'react-animations';
 import { carIcon, carSmallIcon, busIcon, logoIcon } from '../config/icons';
+import colors from '../config/colors';
+import breakpoints from '../config/breakpoints';
 import useApi from '../hooks/useApi';
 import { searchTrip } from '../api/locations';
 import Card from './common/Card';
 import CardEmission from './common/CardEmission';
-import colors from '../config/colors';
 
 interface Props {
   locationFrom: string;
@@ -78,7 +79,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
   }, [locationFrom, locationTo]);
 
   return (
-    <div style={{ flex: '1 1 0' }}>
+    <Container>
       <HeaderCard>
         <HeaderCardItem>
           <img src={carIcon} alt="" />
@@ -96,7 +97,7 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
         </HeaderCardItem>
       </HeaderCard>
 
-      <Container>
+      <CardsContainer>
         <div style={{ flex: '1 1 0' }}>
           <Title>Auswirkungen auf die Umwelt</Title>
           <ResultCards>
@@ -122,13 +123,18 @@ export default function SearchResults({ locationFrom, locationTo }: Props) {
             <CardEmission theme={'primary'} />
           </ResultCards>
         </div>
-      </Container>
-    </div>
+      </CardsContainer>
+    </Container>
   );
 }
 
 const flipInAnimation = keyframes`
   ${flipInX}
+`;
+
+const Container = styled.div`
+  flex: 1 1 0;
+  padding: 0 10px;
 `;
 
 const HeaderCard = styled(Card)`
@@ -155,12 +161,16 @@ const HeaderDelimiter = styled.div`
   border-top: 78px solid ${colors.primary};
 `;
 
-const Container = styled.div`
+const CardsContainer = styled.div`
   max-width: 734px;
   margin: auto;
   margin-top: 35px;
   display: flex;
   animation: 1s ${flipInAnimation};
+
+  @media (max-width: ${breakpoints.screenXs}px) {
+    flex-direction: column;
+  }
 `;
 
 const ResultCards = styled.div`

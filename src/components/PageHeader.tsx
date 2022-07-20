@@ -26,7 +26,7 @@ export default function PageHeader({ onBack }: Props) {
 
 const Section = styled.section`
   background-color: #f6f6f6;
-  padding-top: 14px;
+  padding: 14px 10px;
 `;
 
 const Container = styled.div`

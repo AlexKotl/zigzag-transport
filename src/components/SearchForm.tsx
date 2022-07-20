@@ -2,6 +2,7 @@ import { CSSProperties, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { flipInX } from 'react-animations';
 import colors from '../config/colors';
+import breakpoints from '../config/breakpoints';
 import { pathIcon, switchIcon } from '../config/icons';
 import sliderImg from '../assets/header-slider-image-1@2x.png';
 import Card from './common/Card';
@@ -28,9 +29,9 @@ export default function Search({ onSearch, style }: Props) {
   return (
     <Section>
       <Container style={style}>
-        <div style={{ flex: '1 1 0', marginRight: '7vw' }}>
+        <Slider>
           <img src={sliderImg} alt="" width="100%" />
-        </div>
+        </Slider>
         <Card style={{ flex: '1 1 0' }}>
           <div style={{ padding: '0 10px' }}>
             <SearchTitle>Wähle Deine Pendelroute </SearchTitle>
@@ -79,6 +80,7 @@ const Section = styled.section`
   position: absolute;
   width: 100%;
   animation: 1s ${flipInAnimation};
+  padding: 0 10px;
 `;
 const Container = styled.div`
   max-width: 734px;
@@ -87,6 +89,15 @@ const Container = styled.div`
   display: flex;
   align-items: flex-start;
   flex: 1 1 0;
+`;
+
+const Slider = styled.div`
+  flex: 1 1 0;
+  margin-right: 7vw;
+
+  @media (max-width: ${breakpoints.screenXs}px) {
+    display: none;
+  }
 `;
 
 const SearchTitle = styled.div`
